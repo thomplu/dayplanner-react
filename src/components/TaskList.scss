@@ -1,0 +1,110 @@
+.tasks {
+    background: var(--primary-bg);
+    padding: px-to-rem(16);
+    border-radius: px-to-rem($borderRadius);
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__add-btn {
+        width: px-to-rem(34);
+        height: px-to-rem(34);
+        border-radius: 50%;
+        background: var(--button-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 0;
+        box-shadow: 0 px-to-rem(1) px-to-rem(12) rgba(0, 0, 0, 0.2);
+
+        &:after {
+            border-radius: 50%;
+        }
+    }
+
+    &__add-btn-icon {
+        width: 18px;
+        height: 18px;
+        position: relative;
+        display: block;
+
+        &:before, &:after {
+            background: var(--text-color);
+            position: absolute;
+            border-radius: px-to-rem(2);
+            content: '';
+        }
+
+        &:before {
+            left: 0;
+            top: px-to-rem(7);
+            width: px-to-rem(18);
+            height: px-to-rem(4);
+        }
+        &:after {
+            height: px-to-rem(18);
+            width: px-to-rem(4);
+            top: 0;
+            left: px-to-rem(7);
+        }
+    }
+
+    &__heading {
+        font-size: px-to-rem(20);
+        margin-top: 0;
+        line-height: px-to-rem(34);
+    }
+
+    &__list {
+        padding: 0;
+    }
+
+    &__item {
+        list-style: none;
+        display: flex;
+        border-radius: px-to-rem($borderRadius);
+        background: #fff;
+        box-shadow: 0 px-to-rem(1) px-to-rem(12) rgba(0, 0, 0, 0.2);
+        padding: px-to-rem(8) px-to-rem(12);
+        margin-bottom: px-to-rem(10);
+        font-weight: bold;
+
+        &--is-important {
+            background: var(--task-bg-important);
+            border: px-to-rem(1) solid var(--task-border-important);
+        }
+
+        &:hover {
+            cursor: pointer;
+            .tasks__edit {
+                opacity: 1;
+            }
+            .tasks__delete {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__title {
+        display: block;
+        font-weight: bold;
+        font-size: px-to-rem(15);
+        line-height: px-to-rem(18);
+    }
+
+    &__data {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+    }
+
+    &__duration {
+        line-height: px-to-rem(18);
+        font-size: px-to-rem(10);
+        font-weight: 500;
+        padding-left: px-to-rem(10);
+    }
+}

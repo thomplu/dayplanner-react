@@ -1,0 +1,138 @@
+.popup {
+    &__container {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.5);
+    }
+
+
+    &__window {
+        background: #fff;
+        color: black;
+        width: px-to-rem(360);
+        max-width: calc(100vw - #{px-to-rem($pagePadding * 2)});
+        padding: px-to-rem(25) px-to-rem(20);
+        border-radius: px-to-rem(5);
+    }
+
+    &__btn {
+        width: 100%;
+        margin-bottom: 10px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        margin-top: 6px;
+    }
+
+    &__heading {
+        margin: 0;
+    }
+
+    &__close {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 34px;
+        height: 34px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__close-btn {
+        width: 18px;
+        height: 18px;
+        position: relative;
+
+        &:before, &:after {
+            position: absolute;
+            content: '';
+            background: #000;
+            transform-origin: center;
+            transform: rotate(45deg);
+        }
+        &:before{
+            height: 4px;
+            width: 18px;
+            left: 0;
+            top: 50%;
+            margin-top: -2px;
+            border-radius: 4px;
+        }
+        &:after {
+            width: 4px;
+            height: 18px;
+            top: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 4px;
+        }
+    }
+
+    &__entry {
+        margin-bottom: 16px;
+
+        input, textarea {
+            width: 100%;
+        }
+
+        textarea {
+            field-sizing: normal;
+        }
+    }
+
+    &__overlay {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.5);
+    }
+
+    &__form-container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+
+    &__form {
+        background: #fff;
+        width: 360px;
+        max-width: calc(100vw - 40px);
+        padding: 25px 20px;
+        border-radius: 5px;
+    }
+
+    &__controls {
+        margin-top: 32px;
+    }
+
+    &__errors {
+        color: var(--text-color-error);
+    }
+
+    &__completed {
+        padding-top: 10px;
+    }
+}

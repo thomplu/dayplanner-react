@@ -1,0 +1,88 @@
+:root {
+    --primary-color: #3646f6;
+    --delete-color: #b90808;
+    --primary-bg: #FFF1BD;
+    --button-bg: #F8DF86;
+    --button-delete-bg: #ffc2c2;
+    --text-color: #323232;
+    --page-padding: 20;
+    --task-bg-important: #FFD8D8;
+    --task-border-important: #FF0000;
+    --text-color-error: #FF0000;
+    --input-border-color: #cfcfcf;
+    --rem-page-padding: calc(var(--page-padding) / 16 * 1rem);
+}
+
+body {
+    margin: 0;
+}
+
+button, .button {
+    padding: px-to-rem(10) px-to-rem(16);
+    background: var(--button-bg);
+    color: var(--text-color);
+    font-weight: 700;
+    border: none;
+    border-radius: px-to-rem($inputBorderRadius);
+    cursor: pointer;
+    font-size: px-to-rem($buttonFontSize);
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom:0;
+        box-shadow: 0 px-to-rem(1) px-to-rem(8) rgba(0,0,0,0.2);
+        transition: opacity .2s ease;
+        opacity: 0;
+    }
+    &:hover {
+        &:after {
+            opacity: 1;
+        }
+    }
+
+    &:disabled {
+        background: #706f6f;
+        cursor: not-allowed;
+    }
+
+    &--is-delete {
+        background: var(--button-delete-bg);
+    }
+}
+
+label, .label {
+    font-weight: 700;
+    font-size: px-to-rem($labelFontSize);
+    margin-bottom: px-to-rem(8);
+    display: block;
+}
+
+input, .input {
+    height: auto;
+    padding: px-to-rem(8) px-to-rem(7);
+    border-radius: px-to-rem($inputBorderRadius);
+    border: 1px solid var(--input-border-color);
+    font-size: px-to-rem($inputFontSize);
+    width: 100%;
+    max-width: px-to-rem(320);
+}
+
+textarea {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid var(--input-border-color);
+    font-size: px-to-rem($inputFontSize);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Inter", serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--text-color);
+}
