@@ -20,8 +20,13 @@ export default [
         },
     },
     { ignores: ['dist/', 'build/', 'coverage/', 'node_modules/'] },
-    // { languageOptions: { globals: globals.browser } },
-
+    {
+        settings: {
+            react: {
+                version: 'detect', // Automatically detect React version
+            },
+        },
+    },
     pluginJs.configs.recommended,
     ...tseslint.configs.recommended,
     pluginReact.configs.flat.recommended,
