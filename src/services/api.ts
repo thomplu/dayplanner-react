@@ -1,9 +1,7 @@
-import { TaskData, TaskItem } from '../types/task';
-import { ApiError } from '../types/task';
-
+import { TaskData, TaskItem, ApiError } from '../types/Task.ts';
 class ApiService {
     public accessToken = ''
-    private onUnauthorizedCallback: () => void;
+    private onUnauthorizedCallback: () => void = () => {};
 
     public setOnUnauthorizedHandler(handler: () => void) {
         this.onUnauthorizedCallback = handler
@@ -12,7 +10,6 @@ class ApiService {
     private async request<T>(url: string, options: RequestInit): Promise<T> {
         const response = await fetch(url, options);
 
-        console.log("request response", response)
         if (!response.ok) {
             if (response.status === 403 || response.status === 401) {
                 //Todo Adjust link to login page

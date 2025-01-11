@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api } from '../services/api';
+import { api } from '../../services/api';
 import { Navigate } from 'react-router-dom';
 
 function Login() {
@@ -46,6 +46,6 @@ function Login() {
             </div>
         </div>
     );
-};
+}
 
 export default Login;

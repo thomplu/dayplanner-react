@@ -10,9 +10,19 @@ export interface TaskItem {
     prio?: number,
     duration: number,
     completed?: boolean,
+    closed?: boolean,
+    closureTime?: string
     note?: string,
 }
 
 export type TaskData = Omit<TaskItem, 'id'>
 
-export type EditTaskItem = Partial<TaskItem> & {id: number}
+export interface TaskFormData {
+    title: string,
+    description: string,
+    prio: string,
+    duration: string,
+    completed: boolean,
+    closed: boolean,
+    note: string,
+}

@@ -4,7 +4,9 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
+  "include": ["src/**/*", "tests/**/*"],
   "compilerOptions": {
-    "jsx": "react-jsx" // Enables the new JSX transform
+    "jsx": "react-jsx", // Enables the new JSX transform
+    "types": ["node", "@testing-library/jest-dom", "jest"]
   }
 }

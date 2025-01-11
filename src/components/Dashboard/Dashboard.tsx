@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
-import { api } from '../services/api';
-import { TaskData, TaskItem } from '../types/task';
-import TaskList from './TaskList';
-import TaskPopup from './TaskPopup';
+import { api } from '../../services/api';
+import { TaskData, TaskItem } from '../../types/Task';
+import TaskList from '../TaskList/TaskList';
+import TaskPopup from '../TaskPopup/TaskPopup';
 
 function Dashboard() {
     const [showTaskPopup, setShowTaskPopup] = useState<boolean>(false)
@@ -12,7 +12,7 @@ function Dashboard() {
         fetchTasks().then();
     }, []);
 
-    const unfinishedTasks = useMemo(() => tasks.filter((task) => !task.completed), [tasks])
+    const unfinishedTasks = useMemo(() => tasks.filter((task) => !task.closed), [tasks])
     const tasksTitle = useMemo(() => {
         const totalDurationMins = unfinishedTasks.reduce((accumulator, task) => accumulator + task.duration, 0)
         const hours = Math.floor(totalDurationMins/60)
@@ -40,6 +40,10 @@ function Dashboard() {
 
     const handleTaskConfirm = async (id: number | undefined, taskData: TaskData) => {
         if (id) {
+            if (taskData.closed){
+                const now = new Date();
+                taskData.closureTime = now.toISOString()
+            }
             await api.editTask(id, taskData)
             await fetchTasks()
             setShowTaskPopup(false)
@@ -61,6 +65,6 @@ function Dashboard() {
             <button onClick={handleAddTask}>Add Task</button>
         </>
     );
-};
+}
 
 export default Dashboard;
