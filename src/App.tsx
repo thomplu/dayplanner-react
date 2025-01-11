@@ -2,9 +2,10 @@ import { api } from './services/api';
 import './styles/main.scss';
 import { useNavigate, Route, Routes, BrowserRouter } from 'react-router-dom';
 import Login from './components/Login/Login';
-import Dashboard from './components/Dashboard/Dashboard';
-import Playground from './components/Playground/Playground';
+import CurrentTasks from './pages/CurrentTasks/CurrentTasks';
+import Playground from './pages/Playground/Playground';
 import { useEffect } from 'react';
+import Navigation from './components/Navigation/Navigation';
 
 function NavigationSetup() {
     const navigate = useNavigate();
@@ -25,8 +26,9 @@ function App() {
     return (
         <BrowserRouter>
             <NavigationSetup /> {/* Setup navigation for API service */}
+            <Navigation />
             <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<CurrentTasks />} />
                 <Route path="login" element={<Login />} />
                 <Route path="playground" element={<Playground />} />
             </Routes>
