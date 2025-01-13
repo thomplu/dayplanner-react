@@ -8,14 +8,13 @@ type RadioBtnProps = {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function RadioBtn({ id, label, options, value, onChange }: RadioBtnProps) {
+function RadioBtn({ id, options, value, onChange }: RadioBtnProps) {
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event);
     };
 
     return (
         <div className="radio__group">
-            <label>{label}</label>
             {Object.keys(options).map((key) => (
                 <label className="radio" key={key}>
                     <input

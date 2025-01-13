@@ -69,3 +69,15 @@ export const UnCheckedCheckbox: StoryObj<typeof FormElement> = {
         value: false,
     },
 };
+
+// Checked Radiobutton story
+export const CheckedRadioBtn: StoryObj<typeof FormElement> = {
+    render: Template,
+    args: {
+        id: 'checked-radio',
+        label: 'Checked Radio',
+        type: FormInput.Radio,
+        options: { foo: 'foo', bar: 'bar', barz: 'barz' },
+        value: 'foo',
+    },
+};

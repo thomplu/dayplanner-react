@@ -6,7 +6,7 @@
     &__input {
         display: none;
 
-        &:checked + .cb__checkmark:after {
+        &:checked + .radio__checkmark:after {
             opacity: 1;
         }
     }
