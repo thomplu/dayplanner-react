@@ -1,0 +1,22 @@
+.navigation {
+    height: px-to-rem(60);
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: px-to-rem($maxContentWidth);
+    margin: 0 auto;
+
+    &__item {
+        list-style: none;
+        font-size: px-to-rem(28);
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 px-to-rem(15);
+        text-decoration: none;
+    }
+}

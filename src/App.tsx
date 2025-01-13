@@ -27,11 +27,13 @@ function App() {
         <BrowserRouter>
             <NavigationSetup /> {/* Setup navigation for API service */}
             <Navigation />
-            <Routes>
-                <Route path="/" element={<CurrentTasks />} />
-                <Route path="login" element={<Login />} />
-                <Route path="playground" element={<Playground />} />
-            </Routes>
+            <div className="content">
+                <Routes>
+                    <Route path="/" element={<CurrentTasks />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="playground" element={<Playground />} />
+                </Routes>
+            </div>
         </BrowserRouter>
     );
 }

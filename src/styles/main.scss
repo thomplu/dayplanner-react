@@ -17,6 +17,11 @@ body {
     margin: 0;
 }
 
+.content {
+    max-width: px-to-rem($maxContentWidth);
+    margin: 0 auto;
+}
+
 button, .button {
     padding: px-to-rem(10) px-to-rem(16);
     background: var(--button-bg);
