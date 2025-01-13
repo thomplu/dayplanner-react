@@ -6,6 +6,8 @@ import CurrentTasks from './pages/CurrentTasks/CurrentTasks';
 import Playground from './pages/Playground/Playground';
 import { useEffect } from 'react';
 import Navigation from './components/Navigation/Navigation';
+import CompletedTasks from './pages/CompletedTask/CompletedTasks';
+import UpcomingTasks from './pages/UpcomingTask/UpcomingTasks';
 
 function NavigationSetup() {
     const navigate = useNavigate();
@@ -26,10 +28,12 @@ function App() {
     return (
         <BrowserRouter>
             <NavigationSetup /> {/* Setup navigation for API service */}
-            <Navigation />
+            {api.accessToken ? <Navigation /> : null}
             <div className="content">
                 <Routes>
                     <Route path="/" element={<CurrentTasks />} />
+                    <Route path="completed" element={<CompletedTasks />} />
+                    <Route path="upcoming" element={<UpcomingTasks />} />
                     <Route path="login" element={<Login />} />
                     <Route path="playground" element={<Playground />} />
                 </Routes>

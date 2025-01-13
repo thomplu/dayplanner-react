@@ -5,11 +5,10 @@ type RadioBtnProps = {
     label: string;
     options: Record<string, string>;
     value: string;
-    checked: boolean;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function RadioBtn({ id, label, options, checked, onChange }: RadioBtnProps) {
+function RadioBtn({ id, label, options, value, onChange }: RadioBtnProps) {
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event);
     };
@@ -24,7 +23,7 @@ function RadioBtn({ id, label, options, checked, onChange }: RadioBtnProps) {
                         className="radio__input"
                         name={id}
                         type="radio"
-                        checked={checked}
+                        checked={value === key}
                         onChange={handleOnChange}
                     />
                     <span className="radio__checkmark"></span>
