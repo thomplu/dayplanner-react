@@ -8,10 +8,16 @@ function Navigation() {
                 <Link to="/" className="icon-home navigation__link"></Link>
             </li>
             <li className="navigation__item">
-                <a className="icon-calendar navigation__link" href=""></a>
+                <Link
+                    to="/upcoming"
+                    className="icon-clock navigation__link"
+                ></Link>
             </li>
             <li className="navigation__item">
-                <a className="icon-archive navigation__link" href=""></a>
+                <Link
+                    to="/completed"
+                    className="icon-bar-chart navigation__link"
+                ></Link>
             </li>
         </ul>
     );

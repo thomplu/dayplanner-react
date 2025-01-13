@@ -20,6 +20,7 @@ body {
 .content {
     max-width: px-to-rem($maxContentWidth);
     margin: 0 auto;
+    padding: 0 px-to-rem(20);
 }
 
 button, .button {

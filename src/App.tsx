@@ -8,15 +8,18 @@ import { useEffect } from 'react';
 import Navigation from './components/Navigation/Navigation';
 import CompletedTasks from './pages/CompletedTask/CompletedTasks';
 import UpcomingTasks from './pages/UpcomingTask/UpcomingTasks';
+import { useAuth } from './helpers/authContext';
 
 function NavigationSetup() {
     const navigate = useNavigate();
+    const { logout } = useAuth();
     useEffect(() => {
         if (!navigate) {
             console.error('useNavigate is not available!');
         }
 
         api.setOnUnauthorizedHandler(() => {
+            logout();
             navigate('/login'); // Redirect to login on 401/403
         });
     }, [navigate]);
@@ -25,10 +28,15 @@ function NavigationSetup() {
 }
 
 function App() {
+    const { accessToken } = useAuth();
+    // useEffect(() => {
+    //     console.log('setShowNav', !!api.accessToken);
+    //     setShowNav(!!api.accessToken);
+    // }, [api]);
     return (
         <BrowserRouter>
             <NavigationSetup /> {/* Setup navigation for API service */}
-            {api.accessToken ? <Navigation /> : null}
+            {accessToken ? <Navigation /> : null}
             <div className="content">
                 <Routes>
                     <Route path="/" element={<CurrentTasks />} />

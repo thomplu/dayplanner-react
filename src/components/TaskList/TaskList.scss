@@ -106,5 +106,6 @@
         font-size: px-to-rem(10);
         font-weight: 500;
         padding-left: px-to-rem(10);
+        flex-shrink: 0;
     }
 }

@@ -1,20 +1,26 @@
 import { useState } from 'react';
 import { api } from '../../services/api';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../helpers/authContext';
 
 function Login() {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [navigateToDashboard, setNavigateToDashboard] = useState<boolean>(false)
+    const [navigateToDashboard, setNavigateToDashboard] =
+        useState<boolean>(false);
+    const { setAccessToken } = useAuth();
 
     const handleLogin = async () => {
         if (!username.trim()) return;
         if (!password.trim()) return;
 
         try {
-            await api.login({ username: username, password: password });
-            setNavigateToDashboard(true)
-
+            const res = await api.login({
+                username: username,
+                password: password,
+            });
+            setAccessToken(res.accessToken);
+            setNavigateToDashboard(true);
         } catch (error) {
             console.error('Error logging in:', error);
         }
@@ -37,7 +43,7 @@ function Login() {
             </div>
             <div>
                 <input
-                    type="text"
+                    type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Add a new task"

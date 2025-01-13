@@ -3,16 +3,18 @@ import { api } from '../../services/api';
 import { TaskData, TaskItem } from '../../types/Task';
 import TaskList from '../../components/TaskList/TaskList';
 import TaskPopup from '../../components/TaskPopup/TaskPopup';
+import { useAuth } from '../../helpers/authContext';
 
 function CurrentTasks() {
     const [showTaskPopup, setShowTaskPopup] = useState<boolean>(false);
     const [tasks, setTasks] = useState<TaskItem[]>([]);
+    const { accessToken } = useAuth();
     const [selectedTask, setSelectedTask] = useState<TaskItem | undefined>(
         undefined
     );
     useEffect(() => {
         fetchTasks().then();
-    }, []);
+    }, [accessToken]);
 
     const unfinishedTasks = useMemo(
         () => tasks.filter((task) => !task.closed),
@@ -30,7 +32,7 @@ function CurrentTasks() {
 
     const fetchTasks = async () => {
         try {
-            const data = await api.fetchTasks();
+            const data = await api.fetchTasks(accessToken);
             setTasks(data);
         } catch (error) {
             console.error('Error loading tasks:', error);
@@ -55,12 +57,12 @@ function CurrentTasks() {
                 const now = new Date();
                 taskData.closureTime = now.toISOString();
             }
-            await api.editTask(id, taskData);
+            await api.editTask(accessToken, id, taskData);
             await fetchTasks();
             setShowTaskPopup(false);
             return;
         }
-        await api.createTask(taskData);
+        await api.createTask(accessToken, taskData);
         await fetchTasks();
         setShowTaskPopup(false);
     };

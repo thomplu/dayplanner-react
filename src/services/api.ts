@@ -1,25 +1,34 @@
-import { TaskData, TaskItem, ApiError } from '../types/Task.ts';
+import { ApiError, TaskData, TaskItem } from '../types/Task.ts';
+// Node's built-in EventEmitter
+
 class ApiService {
-    public accessToken = ''
     private onUnauthorizedCallback: () => void = () => {};
 
     public setOnUnauthorizedHandler(handler: () => void) {
-        this.onUnauthorizedCallback = handler
+        this.onUnauthorizedCallback = handler;
     }
 
     private async request<T>(url: string, options: RequestInit): Promise<T> {
         const response = await fetch(url, options);
+        console.log('request url:', url);
 
         if (!response.ok) {
             if (response.status === 403 || response.status === 401) {
                 //Todo Adjust link to login page
-                console.log('reroute to login')
-                this.onUnauthorizedCallback()
+                console.log('reroute to login');
+                console.log(
+                    'call onUnauthorizedCallback',
+                    this.onUnauthorizedCallback
+                );
+                this.onUnauthorizedCallback();
             }
             throw await ApiService.handleError(response);
         }
 
-        if (response.status !== 204 && response.headers.get("Content-Length") !== "0") {
+        if (
+            response.status !== 204 &&
+            response.headers.get('Content-Length') !== '0'
+        ) {
             const data = await response.json();
             return data as T;
         }
@@ -30,76 +39,103 @@ class ApiService {
         if (res.status) {
             return {
                 code: res.status,
-                message: res.statusText
-            }
+                message: res.statusText,
+            };
         }
         return {
             code: null,
-            message: "An unknow error occured!"
-        }
+            message: 'An unknow error occured!',
+        };
     }
 
-    constructor() {
-        this.accessToken = localStorage.getItem('token') ?? ''
+    public async fetchTasks(accessToken: string): Promise<TaskItem[]> {
+        return api.request<TaskItem[]>(
+            'https://railway-planner-backend-production.up.railway.app/tasks',
+            {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                headers: this.getHeaders(accessToken),
+            }
+        );
     }
 
-    public async fetchTasks(): Promise<TaskItem[]> {
-        return api.request<TaskItem[]>('https://railway-planner-backend-production.up.railway.app/tasks', {
-            method: "GET", // *GET, POST, PUT, DELETE, etc.
-            headers: this.getHeaders(),
-        })
-    }
-
-    public async login(data: Record<string, string>): Promise<{accessToken: string, username: string}> {
-        const resData = await api.request<{accessToken: string, username: string}>('https://railway-planner-backend-production.up.railway.app/login', {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            headers: this.getHeaders(),
+    public async login(
+        data: Record<string, string>
+    ): Promise<{ accessToken: string; username: string }> {
+        const resData = await api.request<{
+            accessToken: string;
+            username: string;
+        }>('https://railway-planner-backend-production.up.railway.app/login', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: this.getHeaders(''),
             body: JSON.stringify(data), // body data type must match "Content-Type" header
-        })
-        this.accessToken = resData.accessToken
-        localStorage.setItem('token', this.accessToken)
-        return resData
+        });
+        console.log('set access token');
+        return resData;
     }
 
-    public async register(data: Record<string, string>): Promise<{ username: string }> {
-        return api.request<{username: string}>('https://railway-planner-backend-production.up.railway.app/register', {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            headers: this.getHeaders(),
-            body: JSON.stringify(data), // body data type must match "Content-Type" header
-        })
+    public async register(
+        data: Record<string, string>
+    ): Promise<{ username: string }> {
+        return api.request<{ username: string }>(
+            'https://railway-planner-backend-production.up.railway.app/register',
+            {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: this.getHeaders(''),
+                body: JSON.stringify(data), // body data type must match "Content-Type" header
+            }
+        );
     }
 
-    public async createTask(task: TaskData): Promise<{ task: TaskItem }> {
-        return api.request<{task: TaskItem}>('https://railway-planner-backend-production.up.railway.app/tasks', {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            headers: this.getHeaders(),
-            body: JSON.stringify({task: task}), // body data type must match "Content-Type" header
-        })
+    public async createTask(
+        accessToken: string,
+        task: TaskData
+    ): Promise<{ task: TaskItem }> {
+        return api.request<{ task: TaskItem }>(
+            'https://railway-planner-backend-production.up.railway.app/tasks',
+            {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: this.getHeaders(accessToken),
+                body: JSON.stringify({ task: task }), // body data type must match "Content-Type" header
+            }
+        );
     }
-    public async deleteTask(taskId: number): Promise<void> {
-        return api.request<void>(`https://railway-planner-backend-production.up.railway.app/tasks/${taskId}`, {
-            method: "DELETE", // *GET, POST, PUT, DELETE, etc.
-            headers: this.getHeaders(),
-        })
+    public async deleteTask(
+        accessToken: string,
+        taskId: number
+    ): Promise<void> {
+        return api.request<void>(
+            `https://railway-planner-backend-production.up.railway.app/tasks/${taskId}`,
+            {
+                method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+                headers: this.getHeaders(accessToken),
+            }
+        );
     }
 
-    public async editTask(id: number, taskData: TaskData): Promise<{ task: TaskItem }> {
-        return api.request<{ task: TaskItem }>(`https://railway-planner-backend-production.up.railway.app/tasks/${id}`, {
-            method: "PUT", // *GET, POST, PUT, DELETE, etc.
-            headers: this.getHeaders(),
-            body: JSON.stringify({task: taskData})
-        })
+    public async editTask(
+        accessToken: string,
+        id: number,
+        taskData: TaskData
+    ): Promise<{ task: TaskItem }> {
+        return api.request<{ task: TaskItem }>(
+            `https://railway-planner-backend-production.up.railway.app/tasks/${id}`,
+            {
+                method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+                headers: this.getHeaders(accessToken),
+                body: JSON.stringify({ task: taskData }),
+            }
+        );
     }
 
-    private getHeaders() {
+    private getHeaders(accessToken: string) {
         const headers: Record<string, string> = {
-            'Accept': 'application/json',
+            Accept: 'application/json',
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE"
-        }
-        if (this.accessToken) headers['Authorization'] = `Bearer ${this.accessToken}`
-        return headers
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+        };
+        if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
+        return headers;
     }
 }
 
