@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryFn, StoryObj } from '@storybook/react';
 import FormElement from './FormElement';
-import { TaskFormData } from '../../types/Task';
 import { FormInput } from '../../types/Form';
 
 export default {
@@ -17,20 +16,16 @@ export default {
 } as Meta<typeof FormElement>;
 
 // Template for stories
-const Template: StoryObj<typeof FormElement> = (args) => {
-    const [value, setValue] = useState<string | boolean>(args.value || '');
-
-    const handleChange = ((key: keyof TaskFormData, value: string | boolean) => {
-        setValue(value);
-    })
-
-    return (
-        <FormElement
-            {...args}
-            value={value}
-            onChange={handleChange}
-        />
+const Template: StoryFn<typeof FormElement> = (args) => {
+    const [value, setValue] = useState<string | boolean | number>(
+        args.value || ''
     );
+
+    const handleChange = (value: string | boolean) => {
+        setValue(value);
+    };
+
+    return <FormElement {...args} value={value} onChange={handleChange} />;
 };
 
 // Default story
