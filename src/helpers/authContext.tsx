@@ -10,7 +10,6 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [accessToken, setAccessTokenState] = useState<string>(() => {
-        // Initialize token from localStorage
         return localStorage.getItem('token') || '';
     });
 
@@ -24,7 +23,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const logout = () => {
-        setAccessToken(''); // Clear token
+        setAccessToken('');
     };
 
     return (
@@ -34,7 +33,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-// Hook to use AuthContext
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {

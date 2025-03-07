@@ -20,19 +20,15 @@ function NavigationSetup() {
 
         api.setOnUnauthorizedHandler(() => {
             logout();
-            navigate('/login'); // Redirect to login on 401/403
+            navigate('/login');
         });
     }, [navigate]);
 
-    return null; // This component does not render anything
+    return null;
 }
 
 function App() {
     const { accessToken } = useAuth();
-    // useEffect(() => {
-    //     console.log('setShowNav', !!api.accessToken);
-    //     setShowNav(!!api.accessToken);
-    // }, [api]);
     return (
         <BrowserRouter>
             <NavigationSetup /> {/* Setup navigation for API service */}

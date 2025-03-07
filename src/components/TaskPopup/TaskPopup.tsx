@@ -37,7 +37,6 @@ function TaskPopup({ task, onTaskConfirm, onTaskPopupClose }: TaskPopupProps) {
     const [error, setError] = useState('');
 
     const handleChange = (key: string, value: string | boolean | number) => {
-        // Update only the specific property that has changed
         setTaskDataFields((prevState: TaskFormData) => {
             return { ...prevState, [key]: value };
         });

@@ -28,7 +28,7 @@ function CurrentTasks() {
         const hours = Math.floor(totalDurationMins / 60);
         const restMinutes = totalDurationMins % 60;
         return `${hours}h, ${restMinutes}min tasks today`;
-    }, [tasks]); // Dependency array ensures recalculation when `tasks` changes
+    }, [tasks]);
 
     const fetchTasks = async () => {
         try {

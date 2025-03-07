@@ -1,5 +1,4 @@
 import { ApiError, TaskData, TaskItem } from '../types/Task.ts';
-// Node's built-in EventEmitter
 
 class ApiService {
     private onUnauthorizedCallback: () => void = () => {};
@@ -45,7 +44,7 @@ class ApiService {
         return api.request<TaskItem[]>(
             'https://railway-planner-backend-production.up.railway.app/tasks',
             {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                method: 'GET',
                 headers: this.getHeaders(accessToken),
             }
         );
@@ -54,16 +53,14 @@ class ApiService {
     public async login(
         data: Record<string, string>
     ): Promise<{ accessToken: string; username: string }> {
-        const resData = await api.request<{
+        return api.request<{
             accessToken: string;
             username: string;
         }>('https://railway-planner-backend-production.up.railway.app/login', {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            method: 'POST',
             headers: this.getHeaders(''),
-            body: JSON.stringify(data), // body data type must match "Content-Type" header
+            body: JSON.stringify(data),
         });
-        console.log('set access token');
-        return resData;
     }
 
     public async register(
@@ -72,9 +69,9 @@ class ApiService {
         return api.request<{ username: string }>(
             'https://railway-planner-backend-production.up.railway.app/register',
             {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                method: 'POST',
                 headers: this.getHeaders(''),
-                body: JSON.stringify(data), // body data type must match "Content-Type" header
+                body: JSON.stringify(data),
             }
         );
     }
@@ -86,9 +83,9 @@ class ApiService {
         return api.request<{ task: TaskItem }>(
             'https://railway-planner-backend-production.up.railway.app/tasks',
             {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                method: 'POST',
                 headers: this.getHeaders(accessToken),
-                body: JSON.stringify({ task: task }), // body data type must match "Content-Type" header
+                body: JSON.stringify({ task: task }),
             }
         );
     }
@@ -99,7 +96,7 @@ class ApiService {
         return api.request<void>(
             `https://railway-planner-backend-production.up.railway.app/tasks/${taskId}`,
             {
-                method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+                method: 'DELETE',
                 headers: this.getHeaders(accessToken),
             }
         );
@@ -113,7 +110,7 @@ class ApiService {
         return api.request<{ task: TaskItem }>(
             `https://railway-planner-backend-production.up.railway.app/tasks/${id}`,
             {
-                method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+                method: 'PUT',
                 headers: this.getHeaders(accessToken),
                 body: JSON.stringify({ task: taskData }),
             }

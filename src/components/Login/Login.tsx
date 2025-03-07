@@ -39,7 +39,6 @@ function Login() {
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Add a new task"
                 />
-                {/*<button onClick={handleAddTask}>Add Task</button>*/}
             </div>
             <div>
                 <input
