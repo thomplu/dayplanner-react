@@ -10,16 +10,9 @@ class ApiService {
 
     private async request<T>(url: string, options: RequestInit): Promise<T> {
         const response = await fetch(url, options);
-        console.log('request url:', url);
 
         if (!response.ok) {
             if (response.status === 403 || response.status === 401) {
-                //Todo Adjust link to login page
-                console.log('reroute to login');
-                console.log(
-                    'call onUnauthorizedCallback',
-                    this.onUnauthorizedCallback
-                );
                 this.onUnauthorizedCallback();
             }
             throw await ApiService.handleError(response);
